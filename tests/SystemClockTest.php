@@ -14,7 +14,7 @@ class SystemClockTest extends TestCase
     /**
      * Scenario 01: The SystemClock should alway return the local device's
      * system time.
-     * 
+     *
      * Due to the timestamps being fetched at slightly different times we should
      * expect a small difference between the system timestamp and the clock
      * timestamp, so we use "greater than or equal" and "less than or equal"
@@ -38,7 +38,7 @@ class SystemClockTest extends TestCase
             expected: $systemTimestamp,
             actual: $clockTimestamp,
         );
-        
+
         $this->assertLessThanOrEqual(
             expected: $systemTimestamp + 1,
             actual: $clockTimestamp,

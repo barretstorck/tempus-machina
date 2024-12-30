@@ -36,7 +36,7 @@ class FrozenClockTest extends TestCase
             expected: $systemTimestamp,
             actual: $clockTimestamp,
         );
-        
+
         $this->assertLessThanOrEqual(
             expected: $systemTimestamp + 1,
             actual: $clockTimestamp,
@@ -66,7 +66,6 @@ class FrozenClockTest extends TestCase
             expected: $unixTimestamp,
             actual: $clockTimestamp,
         );
-    
     }
 
     /**

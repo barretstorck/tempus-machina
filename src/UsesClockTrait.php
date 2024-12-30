@@ -25,9 +25,9 @@ trait UsesClockTrait
 
         return $this->clock;
     }
-    
+
     /**
-     * 
+     *
      */
     public function setClock(null|ClockInterface $clock = null): self
     {

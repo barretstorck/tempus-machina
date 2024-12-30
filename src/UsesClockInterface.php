@@ -11,6 +11,6 @@ use Psr\Clock\ClockInterface;
 interface UsesClockInterface
 {
     public function getClock(): ClockInterface;
-    
+
     public function setClock(null|ClockInterface $clock = null): UsesClockInterface;
 }

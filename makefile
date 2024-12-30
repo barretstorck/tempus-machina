@@ -11,19 +11,49 @@ build:
 		--rm \
 		-u $(UID):$(GID) \
 		-v $(GIT_DIR):/app \
-		-w/app/$(REL_DIR) \
+		-w /app/$(REL_DIR) \
 		composer/composer \
-		install
+		update
 
 test:
 	docker run \
 		--rm \
 		-u $(UID):$(GID) \
 		-v $(GIT_DIR):/app \
-		-w/app/$(REL_DIR) \
+		-w /app/$(REL_DIR) \
 		php:8.4-cli \
 			./vendor/bin/phpunit \
 				tests
+
+lint:
+	docker run \
+		--rm \
+		-u $(UID):$(GID) \
+		-v $(GIT_DIR):/app \
+		-w /app/$(REL_DIR) \
+		php:8.4-cli \
+			./vendor/bin/phpcs \
+				-s \
+				-p \
+				--colors \
+				--extensions=php \
+				--standard=PSR12 \
+				--ignore=/vendor \
+				/app
+
+format:
+	docker run \
+		--rm \
+		-u $(UID):$(GID) \
+		-v $(GIT_DIR):/app \
+		-w /app/$(REL_DIR) \
+		php:8.4-cli \
+			./vendor/bin/phpcbf \
+				-p \
+				--extensions=php \
+				--standard=PSR12 \
+				--ignore=/vendor \
+				/app
 
 clean:
 	rm -rf \
