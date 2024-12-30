@@ -33,19 +33,27 @@ final class FrozenClock implements ClockInterface
      */
     public function set(null|int|string|DateTimeInterface|ClockInterface $timestamp = null): self
     {
-        if (is_null($timestamp)) {
-            $this->timestamp = new DateTimeImmutable();
-        } elseif (is_int($timestamp)) {
-            $temp = new DateTimeImmutable();
-            $this->timestamp = $temp->setTimestamp($timestamp);
-        } elseif (is_string($timestamp)) {
-            $this->timestamp = new DateTimeImmutable($timestamp);
-        } elseif ($timestamp instanceof DateTimeInterface) {
-            $this->timestamp = DateTimeImmutable::createFromInterface($timestamp);
-        } elseif ($timestamp instanceof ClockInterface) {
-            $this->timestamp = $timestamp->now();
+        if (is_int($timestamp)) {
+            $this->timestamp = (new DateTimeImmutable())->setTimestamp($timestamp);
+            return $this;
         }
 
+        if (is_string($timestamp)) {
+            $this->timestamp = new DateTimeImmutable($timestamp);
+            return $this;
+        }
+
+        if ($timestamp instanceof DateTimeInterface) {
+            $this->timestamp = DateTimeImmutable::createFromInterface($timestamp);
+            return $this;
+        }
+
+        if ($timestamp instanceof ClockInterface) {
+            $this->timestamp = $timestamp->now();
+            return $this;
+        }
+
+        $this->timestamp = new DateTimeImmutable();
         return $this;
     }
 

@@ -27,23 +27,35 @@ final class OffsetClock implements ClockInterface
      */
     public function set(null|int|string|DateTimeInterface|ClockInterface|DateInterval $offset = null): self
     {
-        if (is_null($offset)) {
-            $this->interval = new DateInterval('PT0S');
-        } elseif (is_int($offset)) {
+        if (is_int($offset)) {
             $string = 'PT' . ((string) $offset) . 'S';
             $this->offset = new DateInterval($string);
-        } elseif (is_string($offset)) {
-            $this->offset = new DateInterval($offset);
-        } elseif ($offset instanceof DateTimeInterface) {
-            $now = new DateTimeImmutable();
-            $this->offset = $now->diff($offset);
-        } elseif ($offset instanceof ClockInterface) {
-            $now = new DateTimeImmutable();
-            $this->offset = $now->diff($offset->now());
-        } elseif ($offset instanceof DateInterval) {
-            $this->offset = $offset;
+            return $this;
         }
 
+        if (is_string($offset)) {
+            $this->offset = new DateInterval($offset);
+            return $this;
+        }
+
+        if ($offset instanceof DateTimeInterface) {
+            $now = new DateTimeImmutable();
+            $this->offset = $now->diff($offset);
+            return $this;
+        }
+
+        if ($offset instanceof ClockInterface) {
+            $now = new DateTimeImmutable();
+            $this->offset = $now->diff($offset->now());
+            return $this;
+        }
+
+        if ($offset instanceof DateInterval) {
+            $this->offset = $offset;
+            return $this;
+        }
+
+        $this->interval = new DateInterval('PT0S');
         return $this;
     }
 
