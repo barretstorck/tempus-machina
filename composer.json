@@ -1,0 +1,17 @@
+{
+    "name": "barretstorck/tempus-machina",
+    "type": "library",
+    "description": "A PSR-20 compliant PHP clock library",
+    "require": {
+        "psr/clock": "^1.0"
+    },
+    "require-dev": {
+        "mockery/mockery": "^1.4.4",
+        "phpunit/phpunit": "^10"
+    },
+    "autoload": {
+        "psr-4": {
+            "BarretStorck\\TempusMachina\\": "src/"
+        }
+    }
+}
