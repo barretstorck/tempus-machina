@@ -17,9 +17,17 @@ savings time transition? What about if the date is February 29th? Or what if
 there is a [leap second](https://en.wikipedia.org/wiki/Leap_second)?
 With Tempus Machina you can simulate these scenarios in your test environments.
 
+View on [Packagist.org](https://packagist.org/packages/barretstorck/tempus-machina).
+
+# Setup
+To add Tempus Machina to your project run:
+```shell
+composer require barretstorck/tempus-machina
+```
+
 # Available Clocks
-There are 3 Clock using the `Psr\Clock\ClockInterface` packaged with Tempus
-Machina that are available for use:
+There are 3 Clocks that implement `Psr\Clock\ClockInterface` and are packaged
+with Tempus Machina:
 
 ### 1. SystemClock
 The SystemClock is the default clock and always returns the device's real system
