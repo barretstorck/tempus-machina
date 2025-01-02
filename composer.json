@@ -2,6 +2,12 @@
     "name": "barretstorck/tempus-machina",
     "type": "library",
     "description": "A PSR-20 compliant PHP clock library",
+    "keywords": [
+        "clock",
+        "time",
+        "psr20",
+        "psr-20"
+    ],
     "require": {
         "psr/clock": "^1.0"
     },
