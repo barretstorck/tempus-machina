@@ -11,6 +11,8 @@ jobs:
   build-and-test:
     name: Build and Test Code
     runs-on: ubuntu-latest
+    container:
+      image: ubuntu:latest
     services:
       docker:
         image: docker:dind
