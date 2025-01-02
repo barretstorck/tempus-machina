@@ -55,7 +55,7 @@ final class OffsetClock implements ClockInterface
             return $this;
         }
 
-        $this->interval = new DateInterval('PT0S');
+        $this->offset = new DateInterval('PT0S');
         return $this;
     }
 
