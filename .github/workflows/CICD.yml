@@ -24,6 +24,7 @@ jobs:
         run: |
           apt-get update
           apt-get install -y build-essential docker.io
+          git config --global --add safe.directory /__w/tempus-machina/tempus-machina
       
       - name: Checkout
         uses: actions/checkout@v4
