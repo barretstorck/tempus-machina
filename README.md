@@ -37,7 +37,8 @@ The FrozenClock will always provide whatever timestamp it is last given and will
 not move forward in time. If no timestamp is given then the system's current
 time will be used by default.
 
-The FrozenClock constructor and `set()` function can accept a parameter for:
+The FrozenClock constructor and `set()` function can accept any of the following
+parameters:
 - An integer unix timestamp
 - A [DateTime formatted](https://www.php.net/manual/en/datetime.construct.php) string 
 - An existing DateTimeInterface object
@@ -60,6 +61,15 @@ $clock->set(4864860000);
 The OffsetClock will continue to move forward in real time from whatever
 timestamp it is last given. If no timestamp is given then the system's current
 time will be used by default.
+
+The OffsetClock constructor and `set()` function can accept any of the following
+parameters:
+- An integer unix timestamp
+- A [DateTime formatted](https://www.php.net/manual/en/datetime.construct.php) string 
+- An existing DateTimeInterface object
+- An existing ClockInterface object
+- An existing DateInterval object
+- null or no parameters to use the current system timestamp as a default
 
 ```php
 // Simulate March 9th 2025 at 23:59:59 just before daylight savings time begins

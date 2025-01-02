@@ -1,0 +1,41 @@
+name: CI/CD Pipeline
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+on:
+  pull_request:
+
+jobs:
+  build-and-test:
+    name: Build and Test Code
+    runs-on: ubuntu-latest
+    container:
+      image: jitesoft/phpunit
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build
+        run: composer update
+
+      - name: Lint
+        run: |
+          ./vendor/bin/phpcs \
+            -s \
+            -p \
+            --colors \
+            --extensions=php \
+            --standard=PSR12 \
+            --ignore=/vendor \
+            /app
+
+      - name: Test
+        run: |
+          ./vendor/bin/phpunit \
+            --coverage-text \
+            --coverage-filter src \
+            --show-uncovered-for-coverage-text \
+            --path-coverage \
+            tests

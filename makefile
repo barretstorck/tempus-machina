@@ -13,7 +13,7 @@ build:
 		-v $(GIT_DIR):/app \
 		-w /app/$(REL_DIR) \
 		composer/composer \
-		update
+			update
 
 test:
 	docker run \
@@ -21,8 +21,13 @@ test:
 		-u $(UID):$(GID) \
 		-v $(GIT_DIR):/app \
 		-w /app/$(REL_DIR) \
-		php:8.4-cli \
+		-e XDEBUG_MODE=coverage \
+		jitesoft/phpunit \
 			./vendor/bin/phpunit \
+				--coverage-text \
+				--coverage-filter src \
+				--show-uncovered-for-coverage-text \
+				--path-coverage \
 				tests
 
 lint:
