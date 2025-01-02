@@ -13,7 +13,7 @@ build:
 		-v $(GIT_DIR):/app \
 		-w /app/$(REL_DIR) \
 		composer/composer \
-		update
+			update
 
 test:
 	docker run \

@@ -12,28 +12,30 @@ jobs:
     name: Build and Test Code
     runs-on: ubuntu-latest
     container:
-      image: ubuntu:latest
-    services:
-      docker:
-        image: docker:dind
-        options: --privileged --shm-size=2g
-        volumes:
-          - /var/run/docker.sock:/var/run/docker.sock:ro
+      image: jitesoft/phpunit
     steps:
-      - name: Install system requirements
-        run: |
-          apt-get update
-          apt-get install -y build-essential docker.io
-          git config --global --add safe.directory /__w/tempus-machina/tempus-machina
-      
       - name: Checkout
         uses: actions/checkout@v4
 
       - name: Build
-        run: make build
+        run: composer update
 
       - name: Lint
-        run: make lint
+        run: |
+          ./vendor/bin/phpcs \
+            -s \
+            -p \
+            --colors \
+            --extensions=php \
+            --standard=PSR12 \
+            --ignore=/vendor \
+            /app
 
       - name: Test
-        run: make test
+        run: |
+          ./vendor/bin/phpunit \
+            --coverage-text \
+            --coverage-filter src \
+            --show-uncovered-for-coverage-text \
+            --path-coverage \
+            tests
