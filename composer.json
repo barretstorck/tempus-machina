@@ -2,6 +2,7 @@
     "name": "barretstorck/tempus-machina",
     "type": "library",
     "description": "A PSR-20 compliant PHP clock library",
+    "license": "MIT",
     "keywords": [
         "clock",
         "time",
