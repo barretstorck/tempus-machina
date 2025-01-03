@@ -6,6 +6,7 @@ use Psr\Clock\ClockInterface;
 use DateInterval;
 use DateTimeImmutable;
 use DateTimeInterface;
+use DateMalformedIntervalStringException;
 
 /**
  *
@@ -27,34 +28,48 @@ final class OffsetClock implements ClockInterface
      */
     public function set(null|int|string|DateTimeInterface|ClockInterface|DateInterval $offset = null): self
     {
-        if (is_int($offset)) {
-            $string = 'PT' . ((string) $offset) . 'S';
-            $this->offset = new DateInterval($string);
-            return $this;
-        }
-
-        if (is_string($offset)) {
-            $this->offset = new DateInterval($offset);
-            return $this;
-        }
-
-        if ($offset instanceof DateTimeInterface) {
-            $now = new DateTimeImmutable();
-            $this->offset = $now->diff($offset);
-            return $this;
-        }
-
-        if ($offset instanceof ClockInterface) {
-            $now = new DateTimeImmutable();
-            $this->offset = $now->diff($offset->now());
-            return $this;
-        }
-
+        // Handle DateInterval
         if ($offset instanceof DateInterval) {
             $this->offset = $offset;
             return $this;
         }
 
+        $now = new DateTimeImmutable();
+
+        // Handle unix timestamp integer
+        if (is_int($offset)) {
+            $timestamp = (new DateTimeImmutable())->setTimestamp($offset);
+            $this->offset = $now->diff($timestamp);
+            return $this;
+        }
+
+        // Handle string
+        if (is_string($offset)) {
+            try {
+                // Handle DateInterval string
+                $this->offset = new DateInterval($offset);
+                return $this;
+            } catch (DateMalformedIntervalStringException $error) {
+                // Handle DateTime string
+                $timestamp = new DateTimeImmutable($offset);
+                $this->offset = $now->diff($timestamp);
+                return $this;
+            }
+        }
+
+        // Handle DateTimeInterface
+        if ($offset instanceof DateTimeInterface) {
+            $this->offset = $now->diff($offset);
+            return $this;
+        }
+
+        // Handle ClockInterface
+        if ($offset instanceof ClockInterface) {
+            $this->offset = $now->diff($offset->now());
+            return $this;
+        }
+
+        // Handle null and any other possibilites
         $this->offset = new DateInterval('PT0S');
         return $this;
     }

@@ -73,6 +73,7 @@ time will be used by default.
 The OffsetClock constructor and `set()` function can accept any of the following
 parameters:
 - An integer unix timestamp
+- A [DateInterval formatted](https://www.php.net/manual/en/dateinterval.construct.php) string
 - A [DateTime formatted](https://www.php.net/manual/en/datetime.construct.php) string 
 - An existing DateTimeInterface object
 - An existing ClockInterface object
