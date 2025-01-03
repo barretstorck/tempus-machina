@@ -24,7 +24,9 @@ test:
 		-e XDEBUG_MODE=coverage \
 		jitesoft/phpunit \
 			./vendor/bin/phpunit \
+				--testdox \
 				--coverage-text \
+				--coverage-html code_coverage \
 				--coverage-filter src \
 				--show-uncovered-for-coverage-text \
 				--path-coverage \

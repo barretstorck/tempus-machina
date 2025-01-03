@@ -19,7 +19,7 @@ trait UsesClockTrait
     {
         // If no clock was set
         // then use the device's system clock by default.
-        if (is_null($this->clock)) {
+        if (!isset($this->clock)) {
             $this->clock = new SystemClock();
         }
 
