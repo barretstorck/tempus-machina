@@ -9,7 +9,7 @@ on:
 
 jobs:
   build-and-test:
-    name: Build and Test Code
+    name: Build, Lint, and Test Code
     runs-on: ubuntu-latest
     container:
       image: jitesoft/phpunit
@@ -34,10 +34,16 @@ jobs:
       - name: Test
         run: |
           ./vendor/bin/phpunit \
-            --colors=always \
             --testdox \
             --coverage-text \
             --coverage-filter src \
             --show-uncovered-for-coverage-text \
             --path-coverage \
+            --display-incomplete \
+            --display-skipped \
+            --display-deprecations \
+            --display-phpunit-deprecations \
+            --display-errors \
+            --display-notices \
+            --display-warning \
             tests
